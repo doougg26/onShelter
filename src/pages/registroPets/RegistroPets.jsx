@@ -1,0 +1,99 @@
+import s from "./RegistroPets.module.scss"
+import api from "../../services/api"
+import { useState, useContext, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../../context/AuthContext"
+import {jwtDecode} from "jwt-decode"
+import Footer from "../../components/footer/Footer"
+import Header from "../../components/header/Header"
+
+export default function RegistroPets() {
+  const [nome, setNome] = useState("")
+  const [especie, setEspecie] = useState("")
+  const [raca, setRaca] = useState("")
+  const [genero, setGenero] = useState("")
+  const [tamanho, setTamanho] = useState("")
+  const [foto_url, setFoto_url] = useState("")
+  const [descricao, setDescricao] = useState("")
+  const [id_dono, setId_dono] = useState("")
+  const [id_abrigo, setId_abrigo] = useState("")
+  const [status, setStatus] = useState("")
+  const [latitude, setLatitude] = useState("")
+  const [longitude, setLongitude] = useState("")
+
+  const navigate = useNavigate()
+  const { token } = useContext(AuthContext)
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/login')
+      return
+    }
+
+    const decoded = jwtDecode(token)
+    setId_dono(decoded.id)
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLatitude(position.coords.latitude.toString())
+        setLongitude(position.coords.longitude.toString())
+      }, (error) => {
+        console.error('Erro ao obter localização:', error)
+      })
+    }
+  }, [token, navigate])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const payload = {
+        nome,
+        especie,
+        raca,
+        genero,
+        tamanho,
+        foto_url,
+        descricao: descricao || null,
+        id_dono: parseInt(id_dono, 10),
+        id_abrigo: id_abrigo ? parseInt(id_abrigo, 10) : null,
+        status,
+      }
+
+      await api.post('/pets', payload)
+      alert('Pet registrado com sucesso!')
+      navigate('/')
+    } catch (error) {
+      console.error('Erro ao registrar pet:', error.response ? error.response.data : error.message)
+      if (error.response && error.response.data) {
+        alert(`Erro ao registrar pet: ${JSON.stringify(error.response.data)}`)
+      }
+    }
+  }
+
+  return (<>
+  <Header />
+    <div className={s.registroContainer}>
+      <form className={s.registroForm} onSubmit={handleSubmit}>
+        <h1>Registro de Pets</h1>
+        <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
+        <input type="text" placeholder="Espécie" value={especie} onChange={(e) => setEspecie(e.target.value)} required />
+        <input type="text" placeholder="Raça" value={raca} onChange={(e) => setRaca(e.target.value)} required />
+        <select value={genero} onChange={(e) => setGenero(e.target.value)} required>
+          <option value="">Gênero</option>
+          <option value="M">M</option>
+          <option value="F">F</option>
+        </select>
+        <input type="text" placeholder="Tamanho" value={tamanho} onChange={(e) => setTamanho(e.target.value)} required />
+        <input type="url" placeholder="Foto URL" value={foto_url} onChange={(e) => setFoto_url(e.target.value)} required />
+        <textarea placeholder="Descrição (opcional)" value={descricao} onChange={(e) => setDescricao(e.target.value)} rows="4" />
+        <input type="number" placeholder="ID do Dono" value={id_dono} disabled />
+        <input type="number" placeholder="ID do Abrigo Atual (opcional)" value={id_abrigo} onChange={(e) => setId_abrigo(e.target.value)} />
+        <input type="text" placeholder="Status" value={status} onChange={(e) => setStatus(e.target.value)} required />
+        <input type="text" placeholder="Latitude" value={latitude} disabled />
+        <input type="text" placeholder="Longitude" value={longitude} disabled />
+        <button type="submit">Registrar Pet</button>
+      </form>
+    </div>
+    <Footer/></>
+  )
+}
