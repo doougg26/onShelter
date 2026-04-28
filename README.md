@@ -1,49 +1,23 @@
-# 📱 Documentação do Frontend - OnShelter
+# 📱 Documentação - OnShelter
 
 **Versão:** 1.0.0  
-**Tecnologia:** React 19 + Vite + React Router + SCSS Modules
+**Tecnologia:** React 19 + Vite
 
 ---
 
 ## 🎯 Visão Geral
 
-O **OnShelter** é uma plataforma web desenvolvida em React que conecta pessoas desabrigadas com abrigos disponíveis e serviços de resgate de pets. O frontend é responsável pela interface do usuário, autenticação, navegação e comunicação com a API backend.
+O **OnShelter** é uma plataforma web desenvolvida em React que conecta pessoas desabrigadas com abrigos disponíveis e serviços de resgate de pets.A ideia surgiu a partir dos recentes cenários de calamidade causados por enchentes no Brasil. Pensando na urgência de salvar vidas e minimizar o pânico durante a evacuação, decidi focar no problema da **desinformação e na falta de centralização de dados** durante o momento de crise. Quando a água sobe, a informação clara é o ativo mais valioso para a sobrevivência e para o resgate seguro.
+Durante enchentes e desastres naturais, milhares de famílias precisam abandonar suas casas às pressas. O problema crítico é que **as pessoas não sabem para onde ir**. 
+
+Muitas vezes, abrigos ficam superlotados enquanto outros têm vagas sobrando, simplesmente porque a informação não chega a quem precisa. Além disso, o abandono e a perda de animais de estimação (pets) disparam, pois muitas famílias não sabem quais abrigos aceitam animais. Por fim, as doações acabam sendo mal distribuídas, gerando excesso de roupas em um local e falta de água potável em outro.
+
+A proposta é uma aplicação web centralizada e de fácil acesso (projetada para conexões lentas) que conecta pessoas desabrigadas, voluntários e gestores de abrigos.
+
 
 ---
 
 ## 📁 Estrutura de Pastas
-
-```
-src/
-├── App.jsx                    # Configuração principal de rotas
-├── main.jsx                   # Ponto de entrada da aplicação
-├── components/                # Componentes reutilizáveis
-│   ├── header/               # Cabeçalho com navegação
-│   ├── footer/               # Rodapé
-│   ├── Desabrigados/         # Página de consulta de desabrigados/pets/abrigos
-│   └── Pets/                 # Componentes de pets
-├── pages/                     # Páginas principais
-│   ├── Landing/              # Página inicial (primeira a ser renderizada)
-│   ├── login/                # Página de login
-│   ├── home/                 # Home após login
-│   ├── Usuario/              # Perfil do usuário
-│   ├── registroAbrigos/      # Cadastro de abrigos
-│   ├── registroDesabrigados/ # Cadastro de desabrigados
-│   ├── registroLogin/        # Cadastro de usuários
-│   ├── registroPets/         # Cadastro de pets
-│   └── Admin/                # Painel administrativo
-├── context/                   # Estado global com Context API
-│   ├── AuthContext.jsx       # Contexto de autenticação
-│   └── AuthProvider.jsx      # Provider do contexto
-├── routes/                    # Configuração de rotas protegidas
-│   └── PrivateRoutes.jsx     # Rotas que precisam de autenticação
-├── services/                  # Chamadas à API
-│   └── api.js                # Configuração do Axios
-└── style/                     # Estilos globais
-    └── globalStyle.scss      # Estilos CSS globais
-```
-
----
 
 ## 🔑 Conceitos Principais
 
