@@ -162,6 +162,156 @@
         text-align: center;
         }
 }
+
+@media (max-width: 720px) {
+    .main {
+        padding: 15px;
+    }
+
+    .landing {
+        width: 90%;
+        padding: 15px;
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        p {
+            font-size: 1.3rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+    }
+
+    .boxSobre,
+    .boxComoFunciona,
+    .boxAjuda,
+    .boxMissao,
+    .boxContato {
+        width: 90%;
+        padding: 15px;
+        margin-bottom: 15px;
+
+        h2 {
+            font-size: 1.8rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    .boxFooter {
+        padding: 15px;
+
+        p {
+            font-size: 0.9rem;
+        }
+    }
+}
+
+@media (max-width: 640px) {
+    .main {
+        padding: 10px;
+    }
+
+    .landing {
+        width: 95%;
+        padding: 10px;
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        p {
+            font-size: 1.1rem;
+        }
+
+        button {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+    }
+
+    .boxSobre,
+    .boxComoFunciona,
+    .boxAjuda,
+    .boxMissao,
+    .boxContato {
+        width: 55%;
+        padding: 12px;
+        margin-bottom: 12px;
+
+        h2 {
+            font-size: 1.6rem;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+    }
+
+    .boxFooter {
+        padding: 12px;
+
+        p {
+            font-size: 0.8rem;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .main {
+        padding: 5px;
+    }
+
+    .landing {
+        width: 100%;
+        padding: 5px;
+
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 6px 12px;
+            font-size: 10px;
+        }
+    }
+
+    .boxSobre,
+    .boxComoFunciona,
+    .boxAjuda,
+    .boxMissao,
+    .boxContato {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+
+        h2 {
+            font-size: 1.4rem;
+        }
+
+        p {
+            font-size: 0.8rem;
+        }
+    }
+
+    .boxFooter {
+        padding: 10px;
+
+        p {
+            font-size: 0.7rem;
+        }
+    }
+}
 }
 
 

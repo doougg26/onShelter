@@ -79,6 +79,90 @@ button:hover {
   opacity: 0.9;
 }
 
+@media (max-width: 720px) {
+  .adminContainer {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  .links button {
+    width: 180px;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .smallInput {
+    width: 140px;
+  }
+}
+
+@media (max-width: 640px) {
+  .adminContainer {
+    padding: 10px;
+  }
+
+  .links {
+    gap: 12px;
+  }
+
+  .links button {
+    width: 160px;
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .table th,
+  .table td {
+    padding: 6px;
+    font-size: 0.8rem;
+  }
+
+  .smallInput {
+    width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .adminContainer {
+    padding: 5px;
+  }
+
+  .links {
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .links button {
+    width: 140px;
+    padding: 6px 12px;
+    font-size: 10px;
+  }
+
+  .table {
+    font-size: 0.7rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 4px;
+  }
+
+  .smallInput {
+    width: 100px;
+  }
+
+  .actionsCell {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
 
 
 

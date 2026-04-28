@@ -6,6 +6,23 @@
     background-color: $clr-color-a10;
     padding: 10px 20px;
 
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+
+        span {
+            width: 25px;
+            height: 3px;
+            background-color: $clr-color-a60;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+    }
+
     .boxLogo{
         display: flex;
         flex-direction: column;
@@ -90,23 +107,126 @@
         }
     }
 
-    @media (max-width: 768px) {
-        flex-direction: column;
-        align-items: flex-start;
+    @media (max-width: 720px) {
+        padding: 10px 15px;
 
-        .nav{
-            flex-wrap: wrap;
-            gap: 12px;
+        .boxLogo h1 {
+            font-size: 1.3rem;
+        }
+
+        .nav {
+            gap: 15px;
+
+            a {
+                font-size: 0.9rem;
+            }
+
+            button {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
+    }
+
+    @media (max-width: 640px) {
+        padding: 10px 10px;
+
+        .boxLogo {
+            gap: 5px;
+
+            img {
+                width: 35px;
+                height: 35px;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+            }
+        }
+
+        .nav {
+            gap: 10px;
+
+            a {
+                font-size: 0.8rem;
+            }
+
+            button {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+        }
+    }
+
+    @media (max-width: 540px) {
+        .hamburger {
+            display: flex;
+        }
+
+        .nav {
+            position: absolute;
+            top: 10%;
+            left: 0;
             width: 100%;
+            background-color: $clr-color-a10;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+            transform: translateY(-100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+
+            &.navOpen {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
 
             .navGroup,
-            .navUser{
-                flex-wrap: wrap;
+            .navUser {
+                flex-direction: column;
+                gap: 10px;
                 width: 100%;
             }
 
-            button{
+            a,
+            button {
                 width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        padding: 5px 10px;
+
+        .boxLogo {
+            gap: 3px;
+
+            img {
+                width: 30px;
+                height: 30px;
+            }
+
+            h1 {
+                font-size: 1rem;
+            }
+        }
+
+        .hamburger span {
+            width: 20px;
+            height: 2px;
+        }
+
+        .nav {
+            padding: 5px;
+
+            a,
+            button {
+                font-size: 0.9rem;
+                padding: 8px;
             }
         }
     }

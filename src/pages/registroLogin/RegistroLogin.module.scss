@@ -3,8 +3,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: spe;
+  justify-content: space-between;
   height: 100vh;
+  background-color: $clr-color-a10;
+  padding: 20px;
   .registroLoginForm {
     display: flex;
     flex-direction: column;

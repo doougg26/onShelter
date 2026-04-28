@@ -10,6 +10,7 @@ export default function Header() {
   const { logout, token } = useContext(AuthContext)
   const [role, setRole] = useState(null)
   const [userName, setUserName] = useState("")
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -76,6 +77,10 @@ const handleNavigateHome = (event) => {
     navigate("/profile")
   }
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
   const isLogged = !!token
 
   return (
@@ -85,7 +90,13 @@ const handleNavigateHome = (event) => {
         <h1>OnShelter</h1>
       </section>
 
-      <nav className={s.nav}>
+      <button className={s.hamburger} onClick={toggleMenu} aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav className={`${s.nav} ${isMenuOpen ? s.navOpen : ''}`}>
         {!isLogged && (
           <div className={s.navGroup}>
             <a href="#sobre" onClick={handleNavigateLanding}>Quem somos</a>

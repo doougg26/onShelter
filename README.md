@@ -7,7 +7,7 @@
 
 ## 🎯 Visão Geral
 
-O **OnShelter** é uma plataforma web desenvolvida em React que conecta pessoas desabrigadas com abrigos disponíveis e serviços de resgate de pets.A ideia surgiu a partir dos recentes cenários de calamidade causados por enchentes no Brasil. Pensando na urgência de salvar vidas e minimizar o pânico durante a evacuação, decidi focar no problema da **desinformação e na falta de centralização de dados** durante o momento de crise. Quando a água sobe, a informação clara é o ativo mais valioso para a sobrevivência e para o resgate seguro.
+O **OnShelter** é uma plataforma web desenvolvida em React para o desafio proposto do **Vai Na Web** que conecta pessoas desabrigadas com abrigos disponíveis e serviços de resgate de pets.A ideia surgiu a partir dos recentes cenários de calamidade causados por enchentes no Brasil. Pensando na urgência de salvar vidas e minimizar o pânico durante a evacuação, decidi focar no problema da **desinformação e na falta de centralização de dados** durante o momento de crise. Quando a água sobe, a informação clara é o ativo mais valioso para a sobrevivência e para o resgate seguro.
 Durante enchentes e desastres naturais, milhares de famílias precisam abandonar suas casas às pressas. O problema crítico é que **as pessoas não sabem para onde ir**. 
 
 Muitas vezes, abrigos ficam superlotados enquanto outros têm vagas sobrando, simplesmente porque a informação não chega a quem precisa. Além disso, o abandono e a perda de animais de estimação (pets) disparam, pois muitas famílias não sabem quais abrigos aceitam animais. Por fim, as doações acabam sendo mal distribuídas, gerando excesso de roupas em um local e falta de água potável em outro.

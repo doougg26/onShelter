@@ -10,6 +10,36 @@
     }
 }
 
+@media (max-width: 720px) {
+    .footer {
+        padding: 15px 0;
+
+        p {
+            font-size: 0.9rem;
+        }
+    }
+}
+
+@media (max-width: 640px) {
+    .footer {
+        padding: 12px 0;
+
+        p {
+            font-size: 0.8rem;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 10px 0;
+
+        p {
+            font-size: 0.7rem;
+        }
+    }
+}
+
 
 
 

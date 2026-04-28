@@ -121,11 +121,11 @@ export default function RegistroAbrigos() {
             <form className={s.registroForm} onSubmit={handleSubmit}>
                 <h1>Registro de Abrigos</h1>
                 <label htmlFor="nome">Nome do Abrigo:</label>
-                <input type="text" id="nome" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} />
+                <input type="text" required id="nome" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} />
                 <label htmlFor="endereco">Endereço:</label>
-                <input type="text" id="endereco" placeholder="Endereço" value={endereco} onChange={(e) => setEndereco(e.target.value)} disabled />
+                <input type="text" required id="endereco" placeholder="Endereço" value={endereco} onChange={(e) => setEndereco(e.target.value)} disabled />
                 <label htmlFor="cep">CEP:</label>
-                <input type="text" id="cep" placeholder="CEP" value={cep} onChange={(e) => setCep(e.target.value)}  />
+                <input type="text" required id="cep" placeholder="CEP" value={cep} onChange={(e) => setCep(e.target.value)}  />
                 {/* <button type="button" onClick={buscarEndereco}>Buscar Endereço</button> */}
                 <label htmlFor="latitude">Latitude:</label>
                 <input type="text" id="latitude" placeholder="Latitude" value={latitude} onChange={(e) => setLatitude(e.target.value)} disabled />

@@ -36,10 +36,10 @@ export default function RegistroLogin() {
     <div className={s.registroLoginContainer}>
         <form className={s.registroLoginForm} onSubmit={handleSubmit}>
             <h1>Registro</h1>
-            <input type="text" placeholder="Nome Completo" value={nomeCompleto} onChange={(e) => setNomeCompleto(e.target.value)} />
-            <input type="text" placeholder="Telefone" value={telefone} onChange={(e) => setTelefone(e.target.value)} />
-            <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input type="text" placeholder="Nome Completo" required value={nomeCompleto} onChange={(e) => setNomeCompleto(e.target.value)} />
+            <input type="text" placeholder="Telefone" required value={telefone} onChange={(e) => setTelefone(e.target.value)} />
+            <input type="text" placeholder="Email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="password" placeholder="Senha" required value={password} onChange={(e) => setPassword(e.target.value)} />
             <button type="submit">Registrar</button>
             <h6>Já tem uma conta? <button onClick={() => (navigate("/login"))}>Faça login</button></h6>
         </form> 

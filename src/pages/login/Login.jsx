@@ -27,9 +27,9 @@ export default function Login() {
         <form className={s.loginForm} onSubmit={handleSubmit}>
             <h1>Login</h1>
             <label htmlFor="email">Email:</label>
-            <input type="text" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="text" id="email" placeholder="Email" required value={email} onChange={(e) => setEmail(e.target.value)} />
             <label htmlFor="hash_senha">Senha:</label>
-            <input type="password" id="hash_senha" placeholder="Senha" value={hash_senha} onChange={(e) => setHashSenha(e.target.value)} />
+            <input type="password" id="hash_senha" placeholder="Senha" required value={hash_senha} onChange={(e) => setHashSenha(e.target.value)} />
             <button type="submit">Entrar</button>
             <h6>Não tem uma conta? <button onClick={() => (navigate("/register"))}>Cadastre-se</button></h6>
         </form>

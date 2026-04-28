@@ -114,15 +114,15 @@ export default function RegistroDesabrigados() {
           Preencher com meus dados
         </button>
         <label htmlFor="usuario_id">ID do Usuário:</label>
-        <input type="number" id="usuario_id" placeholder="ID do Usuário" value={usuario_id} onChange={(e) => setUsuario_id(e.target.value)} disabled={autoFilled.usuario_id} />
+        <input type="number"  id="usuario_id" placeholder="ID do Usuário" value={usuario_id} onChange={(e) => setUsuario_id(e.target.value)} disabled={autoFilled.usuario_id} />
         <label htmlFor="nome_completo">Nome completo:</label>
-        <input type="text" id="nome_completo" placeholder="Nome completo" value={nome_completo} onChange={(e) => setNome_completo(e.target.value)} disabled={autoFilled.nome_completo} required />
+        <input type="text" required id="nome_completo" placeholder="Nome completo" value={nome_completo} onChange={(e) => setNome_completo(e.target.value)} disabled={autoFilled.nome_completo} required />
         <label htmlFor="tamanho_familia">Tamanho da família:</label>
-        <input type="number" id="tamanho_familia" placeholder="Tamanho da família" value={tamanho_familia} onChange={(e) => setTamanho_familia(e.target.value)} min="1" required />
+        <input type="number" required id="tamanho_familia" placeholder="Tamanho da família" value={tamanho_familia} onChange={(e) => setTamanho_familia(e.target.value)} min="1" required />
         <label htmlFor="contato">Contato:</label>
-        <input type="text" id="contato" placeholder="Contato" value={contato} onChange={(e) => setContato(e.target.value)} disabled={autoFilled.contato} required />
+        <input type="text" required id="contato" placeholder="Contato" value={contato} onChange={(e) => setContato(e.target.value)} disabled={autoFilled.contato} required />
         <label htmlFor="cep">CEP:</label>
-        <input type="text" id="cep" placeholder="CEP" value={cep} onChange={(e) => setCep(e.target.value)} required />
+        <input type="text" required id="cep" placeholder="CEP" value={cep} onChange={(e) => setCep(e.target.value)} required />
         {/* <button type="button" onClick={buscarEndereco}>Buscar CEP</button> */}
         <button type="button" onClick={buscarLocalizacao}>Buscar posição atual</button>
         <label htmlFor="latitude">Latitude:</label>
@@ -132,7 +132,7 @@ export default function RegistroDesabrigados() {
         <label htmlFor="id_abrigo_atual">ID do Abrigo Atual (opcional):</label>
         <input type="number" id="id_abrigo_atual" placeholder="ID do Abrigo Atual (opcional)" value={id_abrigo_atual} onChange={(e) => setId_abrigo_atual(e.target.value)} />
         <label htmlFor="status">Status:</label>
-        <select id="status" value={status} onChange={(e) => setStatus(e.target.value)} required>
+        <select id="status" required value={status} onChange={(e) => setStatus(e.target.value)} required>
           <option value="">Selecione um status</option>
           <option value="DESABRIGADO">Desabrigado</option>
           <option value="BUSCANDO">Buscando</option>
