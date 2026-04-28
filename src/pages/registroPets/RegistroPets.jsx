@@ -70,27 +70,60 @@ export default function RegistroPets() {
     }
   }
 
+  const buscarLocalizacao = () => {
+    if (!navigator.geolocation) {
+      alert('Geolocalização não é suportada pelo navegador.')
+      return
+    }
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLatitude(position.coords.latitude.toString())
+      setLongitude(position.coords.longitude.toString())
+    }, (error) => {
+      console.error('Erro ao obter localização:', error)
+      alert('Não foi possível obter a localização. Verifique as permissões do navegador.')
+    })
+  }
+
   return (<>
   <Header />
     <div className={s.registroContainer}>
       <form className={s.registroForm} onSubmit={handleSubmit}>
         <h1>Registro de Pets</h1>
-        <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
-        <input type="text" placeholder="Espécie" value={especie} onChange={(e) => setEspecie(e.target.value)} required />
-        <input type="text" placeholder="Raça" value={raca} onChange={(e) => setRaca(e.target.value)} required />
-        <select value={genero} onChange={(e) => setGenero(e.target.value)} required>
-          <option value="">Gênero</option>
+        <label htmlFor="nome">Nome</label>
+        <input type="text" id="nome" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
+        <label htmlFor="especie">Espécie</label>
+        <input type="text" id="especie" placeholder="Espécie" value={especie} onChange={(e) => setEspecie(e.target.value)} required />
+        <label htmlFor="raca">Raça</label>
+        <input type="text" id="raca" placeholder="Raça" value={raca} onChange={(e) => setRaca(e.target.value)} required />
+        <label htmlFor="genero">Gênero</label>
+        <select id="genero" value={genero} onChange={(e) => setGenero(e.target.value)} required>
+          <option value="">Selecione</option>
           <option value="M">M</option>
           <option value="F">F</option>
         </select>
-        <input type="text" placeholder="Tamanho" value={tamanho} onChange={(e) => setTamanho(e.target.value)} required />
-        <input type="url" placeholder="Foto URL" value={foto_url} onChange={(e) => setFoto_url(e.target.value)} required />
-        <textarea placeholder="Descrição (opcional)" value={descricao} onChange={(e) => setDescricao(e.target.value)} rows="4" />
-        <input type="number" placeholder="ID do Dono" value={id_dono} disabled />
-        <input type="number" placeholder="ID do Abrigo Atual (opcional)" value={id_abrigo} onChange={(e) => setId_abrigo(e.target.value)} />
-        <input type="text" placeholder="Status" value={status} onChange={(e) => setStatus(e.target.value)} required />
-        <input type="text" placeholder="Latitude" value={latitude} disabled />
-        <input type="text" placeholder="Longitude" value={longitude} disabled />
+        <label htmlFor="tamanho">Tamanho</label>
+        <input type="text" id="tamanho" placeholder="Tamanho" value={tamanho} onChange={(e) => setTamanho(e.target.value)} required />
+        <label htmlFor="foto_url">Foto URL</label>
+        <input type="url" id="foto_url" placeholder="Foto URL" value={foto_url} onChange={(e) => setFoto_url(e.target.value)} required />
+        <label htmlFor="descricao">Descrição (opcional)</label>
+        <textarea id="descricao" placeholder="Descrição (opcional)" value={descricao} onChange={(e) => setDescricao(e.target.value)} rows="4" />
+        <label htmlFor="id_dono">ID do Dono</label>
+        <input type="number" id="id_dono" placeholder="ID do Dono" value={id_dono} disabled />
+        <label htmlFor="id_abrigo">ID do Abrigo Atual (opcional)</label>
+        <input type="number" id="id_abrigo" placeholder="ID do Abrigo Atual (opcional)" value={id_abrigo} onChange={(e) => setId_abrigo(e.target.value)} />
+        <label htmlFor="status">Status</label>
+        <select id="status" value={status} onChange={(e) => setStatus(e.target.value)} required>
+          <option value="">Selecione</option>
+          <option value="PERDIDO">Perdido</option>
+          <option value="RESGATADO">Resgatado</option>
+          <option value="ENCONTRADO">Encontrado</option>
+        </select>
+        <button type="button" onClick={buscarLocalizacao}>Buscar posição atual</button>
+        <label htmlFor="latitude">Latitude</label>
+        <input type="text" id="latitude" placeholder="Latitude" value={latitude} disabled />
+        <label htmlFor="longitude">Longitude</label>
+        <input type="text" id="longitude" placeholder="Longitude" value={longitude} disabled />
         <button type="submit">Registrar Pet</button>
       </form>
     </div>

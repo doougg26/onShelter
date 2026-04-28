@@ -97,7 +97,7 @@ export default function RegistroDesabrigados() {
 
       const response = await api.post('/desabrigados', payload)
       alert('Desabrigado registrado com sucesso!')
-      navigate(`/desabrigados/${response.data.desabrigado.id}/abrigos-proximos`)
+      navigate(`/desabrigados/${response.data.desabrigado.id}/abrigos-proximos?from=cadastro`)
     } catch (error) {
       console.error('Erro ao registrar desabrigado:', error.response ? error.response.data : error.message)
       if (error.response && error.response.data) {

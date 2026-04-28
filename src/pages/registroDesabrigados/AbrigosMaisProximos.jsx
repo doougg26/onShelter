@@ -1,7 +1,7 @@
 import s from "./AbrigosMaisProximos.module.scss"
 import api from "../../services/api"
 import { useState, useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 
 function haversineDistance(lat1, lon1, lat2, lon2) {
   const toRad = (value) => (value * Math.PI) / 180
@@ -18,6 +18,8 @@ function haversineDistance(lat1, lon1, lat2, lon2) {
 
 export default function AbrigosMaisProximos() {
   const { id } = useParams()
+  const [searchParams] = useSearchParams()
+  const from = searchParams.get('from')
   const navigate = useNavigate()
   const [desabrigado, setDesabrigado] = useState(null)
   const [abrigos, setAbrigos] = useState([])
@@ -137,9 +139,9 @@ export default function AbrigosMaisProximos() {
                 type="button"
                 className={s.submitButton}
                 onClick={handleEntrarAbrigo}
-                disabled={submitting || desabrigado.status === 'abrigado'}
+                disabled={submitting || desabrigado.status === 'abrigado' || from !== 'cadastro'}
               >
-                {desabrigado.status === 'abrigado' ? 'Você já está abrigado' : 'Entrar no abrigo'}
+                {desabrigado.status === 'abrigado' ? 'Você já está abrigado' : from !== 'cadastro' ? '' : 'Entrar no abrigo'}
               </button>
             </div>
           ) : (

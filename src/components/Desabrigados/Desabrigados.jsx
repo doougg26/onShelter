@@ -52,7 +52,7 @@ export default function Desabrigados() {
   }, [])
 
   const handleNavigateDesabrigado = (id) => {
-    navigate(`/desabrigados/${id}/abrigos-proximos`)
+    navigate(`/desabrigados/${id}/abrigos-proximos?from=consulta`)
   }
 
   // const handleNavigatePet = (id) => {
