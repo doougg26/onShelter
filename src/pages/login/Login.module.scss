@@ -1,3 +1,4 @@
+@import '../../style/_variables.scss';
 /* Login styles */
 .loginContainer {
   display: flex;
@@ -5,7 +6,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f5f5f5;
+  background-color: $clr-color-a10;
     .loginForm {
         display: flex;
         flex-direction: column;
@@ -15,12 +16,12 @@
         width: 100%;
         max-width: 400px;
         padding: 2rem;
-        background-color: #fff;
+        background-color: $clr-color-a0;
         border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba($clr-color-a80, 0.1);
         h2 {
         margin-bottom: 1rem;
-        color: #333;
+        color: $clr-color-a60;
         }
         input {
         width: 100%;
@@ -30,14 +31,14 @@
         font-size: 1rem;
         &:focus {
             outline: none;
-            border-color: #007bff;
+            border-color: $clr-color-a40;
         }
         }
         button {
         width: 100%;
         padding: 0.75rem;
-        background-color: #007bff;
-        color: #fff;
+        background-color: $clr-color-a40;
+        color: $clr-color-a0;
         border: none;
         border-radius: 4px;
         font-size: 1rem;
@@ -48,3 +49,15 @@
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

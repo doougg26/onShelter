@@ -1,6 +1,7 @@
+@import '../../style/_variables.scss';
 .footer{
-    background-color: #333;
-    color: #fff;
+    background-color: $clr-color-a60;
+    color: $clr-color-a0;
     text-align: center;
     padding: 20px 0;
     p{
@@ -8,3 +9,13 @@
         font-size: 1rem;
     }
 }
+
+
+
+
+
+
+
+
+
+
