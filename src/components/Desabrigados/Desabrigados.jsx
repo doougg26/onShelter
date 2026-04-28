@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import api from "../../services/api"
 import Header from "../../components/header/Header"
 import Footer from "../../components/footer/Footer"
+import petPlaceholder from "../../assets/img/pet_placeholder.svg"
 import s from "./Desabrigados.module.scss"
 
 export default function Desabrigados() {
@@ -53,6 +54,10 @@ export default function Desabrigados() {
 
   const handleNavigateDesabrigado = (id) => {
     navigate(`/desabrigados/${id}/abrigos-proximos?from=consulta`)
+  }
+
+  const handlePetImageError = (event) => {
+    event.target.src = petPlaceholder
   }
 
   // const handleNavigatePet = (id) => {
@@ -124,6 +129,12 @@ export default function Desabrigados() {
             <div className={s.grid}>
               {pets.map((pet) => (
                 <div key={pet.id} className={s.card}>
+                  <img
+                    className={s.petImage}
+                    src={pet.foto_url || petPlaceholder}
+                    alt={pet.nome ? `${pet.nome} foto` : 'Pet'}
+                    onError={handlePetImageError}
+                  />
                   <h3>{pet.nome}</h3>
                   <p><strong>Espécie:</strong> {pet.especie}</p>
                   <p><strong>Raça:</strong> {pet.raca}</p>
