@@ -373,6 +373,3 @@ npm run preview
 
 ---
 
-## 📞 Suporte
-
-Para dúvidas ou problemas, consulte a [Documentação da API](./DOCUMENTACAO_API.md) ou entre em contato com o time de desenvolvimento.
