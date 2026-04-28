@@ -2,11 +2,26 @@ import Header from "../../components/header/Header"
 import Footer from "../../components/footer/Footer"
 import { useContext } from "react"
 import { AuthContext } from "../../context/AuthContext"
+import { useNavigate } from "react-router-dom"
 import s from "./Landing.module.scss"
 
 export default function Landing() {
   const { token } = useContext(AuthContext)
   const isLoggedIn = !!token
+
+  const navigate = useNavigate()
+
+const handleNavigateHome = () => {
+  navigate("/home")
+}
+
+const handleNavigateRegister = () => {
+  navigate("/register")
+}
+
+const handleNavigateLogin = () => {
+  navigate("/login")
+}
 
   return (<>
     <Header />
@@ -14,9 +29,9 @@ export default function Landing() {
     <div className={s.landing}>
       <h1>Bem-vindo ao OnShelter</h1>
       <p>Conectando pessoas e abrigos para um futuro melhor</p>
-      {isLoggedIn && <button onClick={() => window.location.href = "/home"}>Comece por aqui</button>}
-        {!isLoggedIn && <button onClick={() => window.location.href = "/register"}>Registre-se para usar o serviço</button>}
-        {!isLoggedIn && <button onClick={() => window.location.href = "/login"}>É Usuario? login</button>}
+      {isLoggedIn && <button onClick={handleNavigateHome}>Comece por aqui</button>}
+        {!isLoggedIn && <button onClick={handleNavigateRegister}>Registre-se para usar o serviço</button>}
+        {!isLoggedIn && <button onClick={handleNavigateLogin}>É Usuario? login</button>}
     </div>
     <div className={s.boxSobre}>
       <h2>Sobre o OnShelter</h2>
