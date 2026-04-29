@@ -9,6 +9,9 @@ import { AuthContext } from "../../context/AuthContext"
 import {jwtDecode} from "jwt-decode"
 import Header from "../../components/header/Header"
 import Footer from "../../components/footer/Footer"
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+//usuario_id, nome_completo, tamanho_familia, contato, cep, latitude, longitude, id_abrigo_atual, status, detalhes_medicos
 
 export default function RegistroDesabrigados() {
   const [usuario_id, setUsuario_id] = useState("")
@@ -49,7 +52,7 @@ export default function RegistroDesabrigados() {
 
   const buscarLocalizacao = () => {
     if (!navigator.geolocation) {
-      alert('Geolocalização não é suportada pelo navegador.')
+      toast.message('Geolocalização não é suportada pelo navegador.')
       return
     }
 
@@ -58,7 +61,7 @@ export default function RegistroDesabrigados() {
       setLongitude(position.coords.longitude.toString())
     }, (error) => {
       console.error('Erro ao obter localização:', error)
-      alert('Não foi possível obter a localização. Verifique as permissões do navegador.')
+      toast.error('Não foi possível obter a localização. Verifique as permissões do navegador.')
     })
   }
 
@@ -74,7 +77,7 @@ export default function RegistroDesabrigados() {
       setAutoFilled({ usuario_id: true, nome_completo: true, contato: true })
     } catch (error) {
       console.error('Erro ao carregar dados do usuário:', error)
-      alert('Não foi possível carregar seus dados. Preencha manualmente.')
+      toast.error('Não foi possível carregar seus dados. Preencha manualmente.')
     }
   }
 
@@ -96,17 +99,18 @@ export default function RegistroDesabrigados() {
       }
 
       const response = await api.post('/desabrigados', payload)
-      alert('Desabrigado registrado com sucesso!')
+      toast.success('Desabrigado registrado com sucesso!')
       navigate(`/desabrigados/${response.data.desabrigado.id}/abrigos-proximos?from=cadastro`)
     } catch (error) {
       console.error('Erro ao registrar desabrigado:', error.response ? error.response.data : error.message)
       if (error.response && error.response.data) {
-        alert(`Erro ao registrar desabrigado: ${JSON.stringify(error.response.data)}`)
+        toast.error(`Erro ao registrar desabrigado: ${JSON.stringify(error.response.data)}`)
       }
     }
   }
 
-  return (<><Header/>
+  return (<>
+  <Header/>
     <div className={s.registroContainer}>
       <form className={s.registroForm} onSubmit={handleSubmit}>
         <h1>Registro de Desabrigados</h1>
@@ -150,6 +154,21 @@ export default function RegistroDesabrigados() {
       </form>
     </div>
     <Footer />
+    
+    <ToastContainer
+      position="top-left"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick={false}
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      transition={Bounce}
+    
+    />
     </>
   )
 }

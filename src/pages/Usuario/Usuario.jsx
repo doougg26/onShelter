@@ -6,6 +6,8 @@ import api from "../../services/api"
 import Header from "../../components/header/Header"
 import Footer from "../../components/footer/Footer"
 import s from "./Usuario.module.scss"
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Usuario() {
   const { logout, token } = useContext(AuthContext)
@@ -62,7 +64,8 @@ export default function Usuario() {
             }
           }
         } catch (err) {
-          console.log("Usuário não tem perfil de desabrigado")
+          console.log("Usuário não tem perfil de desabrigado", err)
+          toast.error("Usuário não tem perfil de desabrigado")
         }
 
         // Carrega pets do usuário
@@ -71,7 +74,8 @@ export default function Usuario() {
           const petsFiltrados = petsRes.data.pets.filter(pet => pet.id_dono === id)
           setPetsData(petsFiltrados)
         } catch (err) {
-          console.log("Erro ao carregar pets")
+          console.log("Erro ao carregar pets", err)
+          toast.error("Erro ao carregar pets")
         }
       }
 
@@ -99,11 +103,13 @@ export default function Usuario() {
           }
         } catch (err) {
           console.error("Erro ao carregar dados do abrigo:", err)
+          toast.error("Erro ao carregar dados do abrigo")
         }
       }
     } catch (err) {
       console.error("Erro ao carregar dados:", err)
       setError("Erro ao carregar dados do perfil")
+      toast.error("Erro ao carregar dados do perfil" ) 
     } finally {
       setLoading(false)
     }
@@ -125,10 +131,10 @@ export default function Usuario() {
       await api.put(`/usuarios/${userId}`, dataToUpdate)
       setUserData(editData)
       setEditing(false)
-      alert("Perfil atualizado com sucesso!")
+      toast.success("Perfil atualizado com sucesso!")
     } catch (err) {
       console.error("Erro ao atualizar perfil:", err)
-      alert("Erro ao atualizar perfil")
+      toast.error("Erro ao atualizar perfil")
     }
   }
 
@@ -151,7 +157,7 @@ export default function Usuario() {
       navigate("/login")
     } catch (err) {
       console.error("Erro ao deletar conta:", err)
-      alert("Erro ao deletar conta")
+      toast.error("Erro ao deletar conta")
     }
   }
 
@@ -192,10 +198,10 @@ export default function Usuario() {
       }
 
       loadUserData(userId, role)
-      alert("Desvinculado do abrigo com sucesso!")
+      toast.success("Desvinculado do abrigo com sucesso!")
     } catch (err) {
       console.error("Erro ao desvincular do abrigo:", err)
-      alert("Erro ao desvincular do abrigo")
+      toast.error("Erro ao desvincular do abrigo")
     }
   }
 
@@ -214,10 +220,10 @@ export default function Usuario() {
 
       await api.delete(`/desabrigados/${desabrigadoData.id}`)
       loadUserData(userId, role)
-      alert("Perfil de desabrigado deletado com sucesso!")
+      toast.success("Perfil de desabrigado deletado com sucesso!")
     } catch (err) {
       console.error("Erro ao deletar perfil de desabrigado:", err)
-      alert("Erro ao deletar perfil de desabrigado")
+      toast.error("Erro ao deletar perfil de desabrigado")
     }
   }
 
@@ -237,10 +243,10 @@ export default function Usuario() {
 
       await api.delete(`/pets/${petId}`)
       setPetsData(petsData.filter(p => p.id !== petId))
-      alert("Pet deletado com sucesso!")
+      toast.success("Pet deletado com sucesso!")
     } catch (err) {
       console.error("Erro ao deletar pet:", err)
-      alert("Erro ao deletar pet")
+      toast.error("Erro ao deletar pet")
     }
   }
 
@@ -285,10 +291,10 @@ export default function Usuario() {
       }
 
       loadUserData(userId, role)
-      alert("Usuário removido do abrigo com sucesso!")
+      toast.success("Usuário removido do abrigo com sucesso!")
     } catch (err) {
       console.error("Erro ao remover usuário:", err)
-      alert("Erro ao remover usuário do abrigo")
+      toast.error("Erro ao remover usuário do abrigo")
     }
   }
 
@@ -312,10 +318,10 @@ export default function Usuario() {
       })
 
       loadUserData(userId, role)
-      alert("Pet removido do abrigo com sucesso!")
+      toast.success("Pet removido do abrigo com sucesso!")
     } catch (err) {
       console.error("Erro ao remover pet:", err)
-      alert("Erro ao remover pet do abrigo")
+      toast.error("Erro ao remover pet do abrigo")
     }
   }
 
@@ -614,6 +620,20 @@ export default function Usuario() {
         )}
       </div>
       <Footer />
+
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </>
   )
 }

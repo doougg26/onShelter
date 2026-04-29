@@ -7,6 +7,8 @@ import { AuthContext } from "../../context/AuthContext"
 import {jwtDecode} from "jwt-decode"
 import Header from "../../components/header/Header"
 import Footer from "../../components/footer/Footer"
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 //nome, endereco, cep, latitutde, longitude, capacidade_total, capacidade_atual, aceita_pets, capacidade_pets, capacidade_atual_pets, contato, gerente_id, verificacao
 
 export default function RegistroAbrigos() {
@@ -39,7 +41,7 @@ export default function RegistroAbrigos() {
                 const userResponse = await api.get(`/usuarios/${decoded.id}`)
                 const user = userResponse.data
                 if (user.role !== 'manager' && user.role !== 'admin') {
-                    alert('Acesso negado. Apenas gerentes ou administradores podem registrar abrigos.')
+                    toast.error('Acesso negado. Apenas gerentes ou administradores podem registrar abrigos.')
                     navigate('/')
                     return
                 }
@@ -58,15 +60,18 @@ export default function RegistroAbrigos() {
                             const data = await response.json()
                             setEndereco(data.display_name || '')
                         } catch (error) {
+                            toast.error('Erro ao obter endereço:')
                             console.error('Erro ao obter endereço:', error)
                         }
                     }, (error) => {
+                        toast.error('Erro ao obter localização:')
                         console.error('Erro ao obter localização:', error)
                     })
                 } else {
-                    alert('Geolocalização não é suportada pelo navegador.')
+                    toast.message('Geolocalização não é suportada pelo navegador.')
                 }
             } catch (error) {
+                toast.error('Erro ao buscar usuário. Por favor, faça login novamente.')
                 console.error('Erro ao buscar usuário:', error)
                 navigate('/login')
             }
@@ -104,12 +109,12 @@ export default function RegistroAbrigos() {
             }
 
             await api.post("/abrigos", payload)
-            alert("Abrigo registrado com sucesso!")
+            toast.success("Abrigo registrado com sucesso!")
             navigate("/")
         } catch (error) {
             console.error("Erro ao registrar abrigo:", error.response ? error.response.data : error.message)
             if (error.response && error.response.data) {
-                alert(`Erro ao registrar abrigo: ${JSON.stringify(error.response.data)}`)
+                toast.error(`Erro ao registrar abrigo: ${JSON.stringify(error.response.data)}`)
             }
         }
     }
@@ -152,6 +157,19 @@ export default function RegistroAbrigos() {
             </form>
         </div>
         <Footer />
+        <ToastContainer
+            position="top-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}
+        />
     </>
     )
 }

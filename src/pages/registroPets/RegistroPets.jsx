@@ -6,6 +6,8 @@ import { AuthContext } from "../../context/AuthContext"
 import {jwtDecode} from "jwt-decode"
 import Footer from "../../components/footer/Footer"
 import Header from "../../components/header/Header"
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function RegistroPets() {
   const [nome, setNome] = useState("")
@@ -39,6 +41,7 @@ export default function RegistroPets() {
         setLongitude(position.coords.longitude.toString())
       }, (error) => {
         console.error('Erro ao obter localização:', error)
+        toast.error('Não foi possível obter a localização. Verifique as permissões do navegador.')
       })
     }
   }, [token, navigate])
@@ -60,12 +63,12 @@ export default function RegistroPets() {
       }
 
       await api.post('/pets', payload)
-      alert('Pet registrado com sucesso!')
+      toast.success('Pet registrado com sucesso!')
       navigate('/')
     } catch (error) {
       console.error('Erro ao registrar pet:', error.response ? error.response.data : error.message)
       if (error.response && error.response.data) {
-        alert(`Erro ao registrar pet: ${JSON.stringify(error.response.data)}`)
+        toast.error(`Erro ao registrar pet: ${JSON.stringify(error.response.data)}`)
       }
     }
   }
@@ -81,7 +84,7 @@ export default function RegistroPets() {
       setLongitude(position.coords.longitude.toString())
     }, (error) => {
       console.error('Erro ao obter localização:', error)
-      alert('Não foi possível obter a localização. Verifique as permissões do navegador.')
+      toast.error('Não foi possível obter a localização. Verifique as permissões do navegador.')
     })
   }
 
@@ -127,6 +130,22 @@ export default function RegistroPets() {
         <button type="submit">Registrar Pet</button>
       </form>
     </div>
-    <Footer/></>
+    <Footer/>
+    
+    <ToastContainer
+      position="top-left"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick={false}
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      transition={Bounce}
+    
+    />
+    </>
   )
 }

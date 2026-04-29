@@ -3,6 +3,10 @@ import api from "../../services/api"
 import { useContext,useState } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 export default function Login() {
 
   const { login } = useContext(AuthContext)
@@ -10,15 +14,17 @@ export default function Login() {
   const [email, setEmail] = useState("")
   const [hash_senha, setHashSenha] = useState("")
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       const resposta = await api.post("/login", { email, hash_senha })
       login(resposta.data.token)
-      alert("Login bem-sucedido!")
+      toast.success("Login bem-sucedido!")
       navigate("/")
     } catch (error) {
-      alert("Erro ao fazer login:", error.response?.data?.message || error.message)
+      toast.error("Erro ao fazer login: " + (error.response?.data?.message || error.message))
     }
   }
 
@@ -31,8 +37,22 @@ export default function Login() {
             <label htmlFor="hash_senha">Senha:</label>
             <input type="password" id="hash_senha" placeholder="Senha" required value={hash_senha} onChange={(e) => setHashSenha(e.target.value)} />
             <button type="submit">Entrar</button>
+            
             <h6>Não tem uma conta? <button onClick={() => (navigate("/register"))}>Cadastre-se</button></h6>
         </form>
+        <ToastContainer
+            position="top-left"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick={false}
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+transition={Bounce}
+ />
     </div>
   )
 }

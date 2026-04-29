@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom"
 import api from "../../services/api"
 import { useState } from "react"
 import s from "./RegistroLogin.module.scss"
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function RegistroLogin() {
 //nome_completo, telefone, email, hash_senha, role
@@ -24,15 +26,15 @@ export default function RegistroLogin() {
                 hash_senha: password,
                 role: role
             })
-            alert("Registro bem-sucedido!")
+            toast.success("Registro bem-sucedido!")
             navigate("/login")
         } catch (error) {
             console.error("Erro ao fazer registro:", error)
-            alert(error.message)
+            toast.error("Erro ao fazer registro: " + (error.response?.data?.message || error.message))
         }
     }
 
-  return (
+  return (<>
     <div className={s.registroLoginContainer}>
         <form className={s.registroLoginForm} onSubmit={handleSubmit}>
             <h1>Registro</h1>
@@ -44,5 +46,20 @@ export default function RegistroLogin() {
             <h6>Já tem uma conta? <button onClick={() => (navigate("/login"))}>Faça login</button></h6>
         </form> 
     </div>
+    <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+    
+    />
+    </>
   )
 }

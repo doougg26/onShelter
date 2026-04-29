@@ -2,6 +2,9 @@ import s from "./AbrigosMaisProximos.module.scss"
 import api from "../../services/api"
 import { useState, useEffect } from "react"
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function haversineDistance(lat1, lon1, lat2, lon2) {
   const toRad = (value) => (value * Math.PI) / 180
@@ -79,11 +82,11 @@ export default function AbrigosMaisProximos() {
       })
       setDesabrigado(response.data.desabrigado)
       setSelectedAbrigo(response.data.abrigo)
-      alert('Você entrou no abrigo com sucesso!')
+      toast.success('Você entrou no abrigo com sucesso!')
       navigate('/')
     } catch (err) {
       console.error('Erro ao entrar no abrigo:', err.response ? err.response.data : err.message)
-      alert('Erro ao entrar no abrigo. Veja o console para detalhes.')
+      toast.error('Erro ao entrar no abrigo. Veja o console para detalhes.')
     } finally {
       setSubmitting(false)
     }
@@ -98,6 +101,7 @@ export default function AbrigosMaisProximos() {
   }
 
   return (
+    <>
     <div className={s.registroContainer}>
       <h1>Abrigos mais próximos</h1>
       <div className={s.content}>
@@ -150,5 +154,19 @@ export default function AbrigosMaisProximos() {
         </div>
       </div>
     </div>
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
+    </>
   )
 }

@@ -17,8 +17,6 @@ A proposta é uma aplicação web centralizada e de fácil acesso (projetada par
 
 ---
 
-## 📁 Estrutura de Pastas
-
 ## 🔑 Conceitos Principais
 
 ### **1. Autenticação e Contexto**
