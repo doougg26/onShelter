@@ -24,7 +24,8 @@ export default function Login() {
       toast.success("Login bem-sucedido!")
       navigate("/")
     } catch (error) {
-      toast.error("Erro ao fazer login: " + (error.response?.data?.message || error.message))
+      console.error("Erro ao fazer login:", error)
+      toast.error("Erro ao fazer login: Usuario ou senha incorretos.")
     }
   }
 

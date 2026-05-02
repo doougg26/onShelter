@@ -10,9 +10,18 @@ export default function Desabrigados() {
   const [desabrigados, setDesabrigados] = useState([])
   const [pets, setPets] = useState([])
   const [abrigos, setAbrigos] = useState([])
+  const [owners, setOwners] = useState({})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const navigate = useNavigate()
+
+  // Estados para filtros e busca
+  const [searchDesabrigados, setSearchDesabrigados] = useState('')
+  const [filterStatusDesabrigados, setFilterStatusDesabrigados] = useState('')
+  const [searchPets, setSearchPets] = useState('')
+  const [filterStatusPets, setFilterStatusPets] = useState('')
+  const [filterEspeciePets, setFilterEspeciePets] = useState('')
+  const [searchAbrigos, setSearchAbrigos] = useState('')
 
   useEffect(() => {
     const loadData = async () => {
@@ -34,6 +43,17 @@ export default function Desabrigados() {
           p.status === 'PERDIDO' || p.status === 'ENCONTRADO'
         )
         setPets(filteredPets)
+
+        // Buscar donos dos pets
+        const uniqueOwnerIds = [...new Set(filteredPets.map(p => p.id_dono).filter(id => id))]
+        if (uniqueOwnerIds.length > 0) {
+          const ownerPromises = uniqueOwnerIds.map(id => 
+            api.get(`/usuarios/${id}`).then(res => ({ id, data: res.data })).catch(() => ({ id, data: null }))
+          )
+          const ownersData = await Promise.all(ownerPromises)
+          const ownersMap = ownersData.reduce((acc, { id, data }) => ({ ...acc, [id]: data }), {})
+          setOwners(ownersMap)
+        }
 
         // Filtrar abrigos com lotação não máxima
         const filteredAbrigos = abrigosRes.data.abrigos.filter(a => 
@@ -60,15 +80,32 @@ export default function Desabrigados() {
     event.target.src = petPlaceholder
   }
 
-  // const handleNavigatePet = (id) => {
-  //   // Talvez uma página de detalhes do pet
-  //   // navigate(`/pets/${id}`)
-  // }
+  // Funções de filtragem
+  const filteredDesabrigados = desabrigados.filter(d => {
+    const matchesSearch = d.nome_completo.toLowerCase().includes(searchDesabrigados.toLowerCase()) ||
+                          d.contato.toLowerCase().includes(searchDesabrigados.toLowerCase()) ||
+                          d.cep.includes(searchDesabrigados)
+    const matchesStatus = filterStatusDesabrigados === '' || d.status === filterStatusDesabrigados
+    return matchesSearch && matchesStatus
+  })
 
-  // const handleNavigateAbrigo = (id) => {
-  //   // Talvez uma página de detalhes do abrigo
-  //   // navigate(`/abrigos/${id}`)
-  // }
+  const filteredPets = pets.filter(p => {
+    const searchLower = searchPets.toLowerCase()
+    const matchesSearch = (p.nome && p.nome.toLowerCase().includes(searchLower)) ||
+                          (p.especie && p.especie.toLowerCase().includes(searchLower)) ||
+                          (p.raca && p.raca.toLowerCase().includes(searchLower)) ||
+                          (p.descricao && p.descricao.toLowerCase().includes(searchLower))
+    const matchesStatus = filterStatusPets === '' || p.status === filterStatusPets
+    const matchesEspecie = filterEspeciePets === '' || (p.especie && p.especie === filterEspeciePets)
+    return matchesSearch && matchesStatus && matchesEspecie
+  })
+
+  const filteredAbrigos = abrigos.filter(a => {
+    const matchesSearch = a.nome.toLowerCase().includes(searchAbrigos.toLowerCase()) ||
+                          a.endereco.toLowerCase().includes(searchAbrigos.toLowerCase()) ||
+                          a.cep.includes(searchAbrigos)
+    return matchesSearch
+  })
 
   if (loading) {
     return (
@@ -102,11 +139,29 @@ export default function Desabrigados() {
 
         <section className={s.section}>
           <h2>Pessoas Desabrigadas</h2>
-          {desabrigados.length === 0 ? (
+          <div className={s.filters}>
+            <input
+              type="text"
+              placeholder="Buscar por nome, contato ou CEP..."
+              value={searchDesabrigados}
+              onChange={(e) => setSearchDesabrigados(e.target.value)}
+              className={s.searchInput}
+            />
+            <select
+              value={filterStatusDesabrigados}
+              onChange={(e) => setFilterStatusDesabrigados(e.target.value)}
+              className={s.filterSelect}
+            >
+              <option value="">Todos os Status</option>
+              <option value="BUSCANDO">Buscando</option>
+              <option value="RESGATADO">Resgatado</option>
+            </select>
+          </div>
+          {filteredDesabrigados.length === 0 ? (
             <p>Nenhuma pessoa desabrigada encontrada.</p>
           ) : (
             <div className={s.grid}>
-              {desabrigados.map((desabrigado) => (
+              {filteredDesabrigados.map((desabrigado) => (
                 <div key={desabrigado.id} className={s.card}>
                   <h3>{desabrigado.nome_completo}</h3>
                   <p><strong>Contato:</strong> {desabrigado.contato}</p>
@@ -123,11 +178,39 @@ export default function Desabrigados() {
 
         <section className={s.section}>
           <h2>Pets Perdidos ou Encontrados</h2>
-          {pets.length === 0 ? (
+          <div className={s.filters}>
+            <input
+              type="text"
+              placeholder="Buscar por nome, espécie, raça ou descrição..."
+              value={searchPets}
+              onChange={(e) => setSearchPets(e.target.value)}
+              className={s.searchInput}
+            />
+            <select
+              value={filterStatusPets}
+              onChange={(e) => setFilterStatusPets(e.target.value)}
+              className={s.filterSelect}
+            >
+              <option value="">Todos os Status</option>
+              <option value="PERDIDO">Perdido</option>
+              <option value="ENCONTRADO">Encontrado</option>
+            </select>
+            <select
+              value={filterEspeciePets}
+              onChange={(e) => setFilterEspeciePets(e.target.value)}
+              className={s.filterSelect}
+            >
+              <option value="">Todas as Espécies</option>
+              <option value="Cachorro">Cachorro</option>
+              <option value="Gato">Gato</option>
+              {/* Adicione outras espécies se necessário */}
+            </select>
+          </div>
+          {filteredPets.length === 0 ? (
             <p>Nenhum pet encontrado.</p>
           ) : (
             <div className={s.grid}>
-              {pets.map((pet) => (
+              {filteredPets.map((pet) => (
                 <div key={pet.id} className={s.card}>
                   <img
                     className={s.petImage}
@@ -135,10 +218,17 @@ export default function Desabrigados() {
                     alt={pet.nome ? `${pet.nome} foto` : 'Pet'}
                     onError={handlePetImageError}
                   />
-                  <h3>{pet.nome}</h3>
-                  <p><strong>Espécie:</strong> {pet.especie}</p>
-                  <p><strong>Raça:</strong> {pet.raca}</p>
+                  <h3>{pet.nome || 'Nome não informado'}</h3>
+                  <p><strong>Espécie:</strong> {pet.especie || 'Não informada'}</p>
+                  <p><strong>Raça:</strong> {pet.raca || 'Não informada'}</p>
                   <p><strong>Status:</strong> {pet.status}</p>
+                  <p><strong>Ultima Localização:</strong> {pet.descricao || 'Não informada'}</p>
+                  {pet.id_dono && owners[pet.id_dono] && (
+                    <>
+                      <p><strong>Dono:</strong> {owners[pet.id_dono].nome_completo || 'Nome não informado'}</p>
+                      <p><strong>Contato do Dono:</strong> {owners[pet.id_dono].telefone || owners[pet.id_dono].email || 'Não informado'}</p>
+                    </>
+                  )}
                   {/* <button onClick={() => handleNavigatePet(pet.id)}>
                     Ver Detalhes
                   </button> */}
@@ -150,11 +240,20 @@ export default function Desabrigados() {
 
         <section className={s.section}>
           <h2>Abrigos com Vagas Disponíveis</h2>
-          {abrigos.length === 0 ? (
+          <div className={s.filters}>
+            <input
+              type="text"
+              placeholder="Buscar por nome, endereço ou CEP..."
+              value={searchAbrigos}
+              onChange={(e) => setSearchAbrigos(e.target.value)}
+              className={s.searchInput}
+            />
+          </div>
+          {filteredAbrigos.length === 0 ? (
             <p>Nenhum abrigo com vagas encontrado.</p>
           ) : (
             <div className={s.grid}>
-              {abrigos.map((abrigo) => (
+              {filteredAbrigos.map((abrigo) => (
                 <div key={abrigo.id} className={s.card}>
                   <h3>{abrigo.nome}</h3>
                   <p><strong>Endereço:</strong> {abrigo.endereco}</p>

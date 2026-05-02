@@ -124,8 +124,7 @@ export default function Usuario() {
       const dataToUpdate = {
         nome_completo: editData.nome_completo,
         telefone: editData.telefone,
-        email: editData.email,
-        role: userData.role
+        email: editData.email
       }
       
       await api.put(`/usuarios/${userId}`, dataToUpdate)
@@ -375,8 +374,7 @@ export default function Usuario() {
                 />
               </div>
               <div className={s.formGroup}>
-                <label>Role:</label>
-                <input type="text" value={userData.role} disabled />
+
               </div>
               <div className={s.buttonGroup}>
                 <button onClick={handleSaveUser} className={s.saveBtn}>
@@ -399,7 +397,7 @@ export default function Usuario() {
                 <strong>Email:</strong> {userData?.email}
               </p>
               <p>
-                <strong>Role:</strong> {userData?.role}
+                <strong> Perfil:</strong> {userData?.role}
               </p>
               <div className={s.buttonGroup}>
                 <button onClick={() => setEditing(true)} className={s.editBtn}>

@@ -17,14 +17,25 @@ export default function RegistroPets() {
   const [tamanho, setTamanho] = useState("")
   const [foto_url, setFoto_url] = useState("")
   const [descricao, setDescricao] = useState("")
-  const [id_dono, setId_dono] = useState("")
+ 
   const [id_abrigo, setId_abrigo] = useState("")
   const [status, setStatus] = useState("")
-  const [latitude, setLatitude] = useState("")
-  const [longitude, setLongitude] = useState("")
 
+ const { token } = useContext(AuthContext)
   const navigate = useNavigate()
-  const { token } = useContext(AuthContext)
+ const [id_dono, setId_dono] = useState(donoPetId() || "")
+ 
+  // eslint-disable-next-line no-useless-assignment
+  const donoPetId =() => {
+    if(token){
+      const decoded = jwtDecode(token)
+      return decoded.id
+    }
+    return null
+  }
+ 
+ 
+
 
   useEffect(() => {
     if (!token) {
@@ -32,18 +43,7 @@ export default function RegistroPets() {
       return
     }
 
-    const decoded = jwtDecode(token)
-    setId_dono(decoded.id)
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLatitude(position.coords.latitude.toString())
-        setLongitude(position.coords.longitude.toString())
-      }, (error) => {
-        console.error('Erro ao obter localização:', error)
-        toast.error('Não foi possível obter a localização. Verifique as permissões do navegador.')
-      })
-    }
   }, [token, navigate])
 
   const handleSubmit = async (e) => {
@@ -73,20 +73,6 @@ export default function RegistroPets() {
     }
   }
 
-  const buscarLocalizacao = () => {
-    if (!navigator.geolocation) {
-      alert('Geolocalização não é suportada pelo navegador.')
-      return
-    }
-
-    navigator.geolocation.getCurrentPosition((position) => {
-      setLatitude(position.coords.latitude.toString())
-      setLongitude(position.coords.longitude.toString())
-    }, (error) => {
-      console.error('Erro ao obter localização:', error)
-      toast.error('Não foi possível obter a localização. Verifique as permissões do navegador.')
-    })
-  }
 
   return (<>
   <Header />
@@ -109,10 +95,10 @@ export default function RegistroPets() {
         <input type="text" id="tamanho" placeholder="Tamanho" value={tamanho} onChange={(e) => setTamanho(e.target.value)} required />
         <label htmlFor="foto_url">Foto URL</label>
         <input type="url" id="foto_url" placeholder="Foto URL" value={foto_url} onChange={(e) => setFoto_url(e.target.value)} required />
-        <label htmlFor="descricao">Descrição (opcional)</label>
-        <textarea id="descricao" placeholder="Descrição (opcional)" value={descricao} onChange={(e) => setDescricao(e.target.value)} rows="4" />
+        <label htmlFor="descricao">Ultimo Local visto</label>
+        <textarea id="descricao" placeholder="Ultimo Local visto" value={descricao} onChange={(e) => setDescricao(e.target.value)} rows="4" required />
         <label htmlFor="id_dono">ID do Dono</label>
-        <input type="number" id="id_dono" placeholder="ID do Dono" value={id_dono} disabled />
+        <input type="number" id="id_dono" placeholder="ID do Dono" value={id_dono} onChange={(e) => setId_dono(e.target.value)} disabled />
         <label htmlFor="id_abrigo">ID do Abrigo Atual (opcional)</label>
         <input type="number" id="id_abrigo" placeholder="ID do Abrigo Atual (opcional)" value={id_abrigo} onChange={(e) => setId_abrigo(e.target.value)} />
         <label htmlFor="status">Status</label>
@@ -122,11 +108,6 @@ export default function RegistroPets() {
           <option value="RESGATADO">Resgatado</option>
           <option value="ENCONTRADO">Encontrado</option>
         </select>
-        <button type="button" onClick={buscarLocalizacao}>Buscar posição atual</button>
-        <label htmlFor="latitude">Latitude</label>
-        <input type="text" id="latitude" placeholder="Latitude" value={latitude} disabled />
-        <label htmlFor="longitude">Longitude</label>
-        <input type="text" id="longitude" placeholder="Longitude" value={longitude} disabled />
         <button type="submit">Registrar Pet</button>
       </form>
     </div>
