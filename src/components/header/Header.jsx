@@ -4,9 +4,10 @@ import { AuthContext } from "../../context/AuthContext"
 import api from "../../services/api"
 import s from "./Header.module.scss"
 import imglogo from "../../assets/img/hero.png"
+
 import {jwtDecode} from "jwt-decode"
 
-export default function Header() {
+export default function Header( { onNavigate } ) {
   const { logout, token } = useContext(AuthContext)
   const [role, setRole] = useState(null)
   const [userName, setUserName] = useState("")
@@ -99,8 +100,8 @@ const handleNavigateHome = (event) => {
       <nav className={`${s.nav} ${isMenuOpen ? s.navOpen : ''}`}>
         {!isLogged && (
           <div className={s.navGroup}>
-            <a href="#sobre" onClick={handleNavigateLanding}>Quem somos</a>
-            <a href="#contato" onClick={handleNavigateLanding}>Contato</a>
+            <a href="#" onClick={() => onNavigate('sobre')}>Quem somos</a>
+            <a href="#" onClick={() => onNavigate('contato')}>Contato</a>
             <a href="#" onClick={handleNavigateLogin}>Entrar</a>
             <a href="#" onClick={handleNavigateRegister}>Registrar</a>
           </div>
@@ -110,8 +111,8 @@ const handleNavigateHome = (event) => {
           <div className={s.navUser}>
             <a href="#" onClick={handleNavigateProfile} className={s.nameLink}>Olá, {userName || "Usuário"}</a>
             <div className={s.navLinks}>
-              <a href="#" onClick={handleNavigateLanding}>Quem somos</a>
-              <a href="#" onClick={handleNavigateLanding}>Contato</a>
+              <a href="#" onClick={() => onNavigate('sobre')}>Quem somos</a>
+              <a href="#" onClick={() => onNavigate('contato')}>Contato</a>
             </div>
             <button onClick={handleLogout}>Sair</button>
           </div>

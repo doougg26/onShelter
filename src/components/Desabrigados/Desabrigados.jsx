@@ -203,7 +203,7 @@ export default function Desabrigados() {
               <option value="">Todas as Espécies</option>
               <option value="Cachorro">Cachorro</option>
               <option value="Gato">Gato</option>
-              {/* Adicione outras espécies se necessário */}
+             <option value="">Outro</option>
             </select>
           </div>
           {filteredPets.length === 0 ? (
