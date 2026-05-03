@@ -23,7 +23,7 @@ export default function RegistroPets() {
 
  const { token } = useContext(AuthContext)
   const navigate = useNavigate()
- const [id_dono, setId_dono] = useState(donoPetId() || "")
+ const [id_dono, setId_dono] = useState("")
  
   // eslint-disable-next-line no-useless-assignment
   const donoPetId =() => {
@@ -43,7 +43,7 @@ export default function RegistroPets() {
       return
     }
 
-
+ setId_dono(donoPetId())
   }, [token, navigate])
 
   const handleSubmit = async (e) => {
@@ -64,7 +64,7 @@ export default function RegistroPets() {
 
       await api.post('/pets', payload)
       toast.success('Pet registrado com sucesso!')
-      navigate('/')
+      navigate('/desabrigados')
     } catch (error) {
       console.error('Erro ao registrar pet:', error.response ? error.response.data : error.message)
       if (error.response && error.response.data) {

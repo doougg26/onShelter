@@ -34,7 +34,7 @@ export default function Desabrigados() {
 
         // Filtrar desabrigados com status "desabrigado" ou "buscando"
         const filteredDesabrigados = desabrigadosRes.data.filter(d => 
-          d.status === 'BUSCANDO' || d.status === 'RESGATADO'
+         d.status === 'DESABRIGADO' || d.status === 'BUSCANDO' || d.status === 'ABRIGADO' 
         )
         setDesabrigados(filteredDesabrigados)
 
@@ -84,7 +84,7 @@ export default function Desabrigados() {
   const filteredDesabrigados = desabrigados.filter(d => {
     const matchesSearch = d.nome_completo.toLowerCase().includes(searchDesabrigados.toLowerCase()) ||
                           d.contato.toLowerCase().includes(searchDesabrigados.toLowerCase()) ||
-                          d.cep.includes(searchDesabrigados)
+                          d.ultima_localizacao.includes(searchDesabrigados)
     const matchesStatus = filterStatusDesabrigados === '' || d.status === filterStatusDesabrigados
     return matchesSearch && matchesStatus
   })
@@ -142,7 +142,7 @@ export default function Desabrigados() {
           <div className={s.filters}>
             <input
               type="text"
-              placeholder="Buscar por nome, contato ou CEP..."
+              placeholder="Buscar por nome..."
               value={searchDesabrigados}
               onChange={(e) => setSearchDesabrigados(e.target.value)}
               className={s.searchInput}
@@ -153,6 +153,7 @@ export default function Desabrigados() {
               className={s.filterSelect}
             >
               <option value="">Todos os Status</option>
+              <option value="DESABRIGADO">Desabrigado</option>
               <option value="BUSCANDO">Buscando</option>
               <option value="RESGATADO">Resgatado</option>
             </select>
@@ -165,7 +166,7 @@ export default function Desabrigados() {
                 <div key={desabrigado.id} className={s.card}>
                   <h3>{desabrigado.nome_completo}</h3>
                   <p><strong>Contato:</strong> {desabrigado.contato}</p>
-                  <p><strong>CEP:</strong> {desabrigado.cep}</p>
+                  <p><strong>Ultima Localização:</strong> {desabrigado.ultima_localizacao}</p>
                   <p><strong>Status:</strong> {desabrigado.status}</p>
                   <button onClick={() => handleNavigateDesabrigado(desabrigado.id)}>
                     Ver Abrigos Próximos
@@ -192,7 +193,7 @@ export default function Desabrigados() {
               className={s.filterSelect}
             >
               <option value="">Todos os Status</option>
-              <option value="PERDIDO">Perdido</option>
+              <option value="BUSCANDO">Perdido</option>
               <option value="ENCONTRADO">Encontrado</option>
             </select>
             <select

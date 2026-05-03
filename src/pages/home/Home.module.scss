@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     background-color: $clr-color-a10;
     padding: 20px;
     h2{
@@ -26,18 +26,284 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba($clr-color-a80, 0.1);
-                h3{
+            transition: all 0.3s ease;
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 16px rgba($clr-color-a80, 0.2);
+            }
+
+            .boxIcon {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+                color: $clr-color-a60;
+                transition: transform 0.3s ease;
+            }
+
+            &:hover .boxIcon {
+                transform: scale(1.1);
+            }
+
+            h3{
                 font-size: 1.5rem;
                 color: $clr-color-a60;
                 margin-bottom: 10px;
+            }
+
+            button {
+                background: linear-gradient(135deg, $clr-color-a60 0%, $clr-color-a60 100%);
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 8px;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-weight: 600;
+
+                &:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0 6px 12px rgba($clr-color-a60, 0.3);
                 }
-                p{
+
+                &:active {
+                    transform: scale(0.98);
+                }
+            }
+
+            p{
                 font-size: 1.2rem;
                 color: $clr-color-a50;
                 text-align: center;
-                }
+            }
         }
 
+    }
+
+    .dashboardSection {
+        width: 100%;
+        max-width: 1400px;
+        margin-top: 40px;
+        padding: 30px 20px;
+        background-color: $clr-color-a0;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba($clr-color-a80, 0.1);
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: $clr-color-a60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            .dashboardIcon {
+                font-size: 2rem;
+                color: $clr-color-a60;
+            }
+        }
+
+        .loadingText {
+            text-align: center;
+            color: $clr-color-a50;
+            font-size: 1.1rem;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            .spinner {
+                animation: spin 1s linear infinite;
+            }
+        }
+
+        .emptyText {
+            text-align: center;
+            color: $clr-color-a50;
+            font-size: 1.1rem;
+            padding: 20px;
+        }
+
+        .dashboardGrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .abrrigoCard {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba($clr-color-a80, 0.1);
+            transition: all 0.3s ease;
+
+            &:hover {
+                box-shadow: 0 8px 20px rgba($clr-color-a80, 0.15);
+                transform: translateY(-5px);
+                border-color: $clr-color-a60;
+            }
+
+            .cardHeader {
+                margin-bottom: 20px;
+
+                .titleWithIcon {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-bottom: 8px;
+
+                    .cardIcon {
+                        font-size: 1.5rem;
+                        color: $clr-color-a60;
+                        min-width: 24px;
+                    }
+                }
+
+                h3 {
+                    font-size: 1.3rem;
+                    color: $clr-color-a60;
+                    margin: 0;
+                }
+
+                .enderecoSmall {
+                    font-size: 0.85rem;
+                    color: $clr-color-a50;
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+
+                    svg {
+                        font-size: 0.8rem;
+                        color: $clr-color-a60;
+                    }
+                }
+            }
+
+            .occupancyMetric {
+                margin-bottom: 20px;
+
+                .progressBarContainer {
+                    width: 100%;
+                    height: 24px;
+                    background-color: #e0e0e0;
+                    border-radius: 12px;
+                    overflow: hidden;
+                    margin-bottom: 12px;
+
+                    .progressBar {
+                        height: 100%;
+                        transition: width 0.5s ease;
+                        border-radius: 12px;
+                    }
+                }
+
+                .occupancyStats {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+
+                    .percentage {
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                        color: $clr-color-a60;
+                    }
+
+                    .numbers {
+                        font-size: 0.95rem;
+                        color: $clr-color-a50;
+                    }
+
+                    .available {
+                        font-size: 0.9rem;
+                        color: #22c55e;
+                        font-weight: 500;
+                    }
+                }
+            }
+
+            .petsInfo {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+                border-left: 4px solid #3b82f6;
+                padding: 12px;
+                border-radius: 6px;
+                margin-bottom: 15px;
+
+                h4 {
+                    font-size: 0.9rem;
+                    color: $clr-color-a60;
+                    margin-bottom: 8px;
+                    font-weight: 600;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+
+                    svg {
+                        font-size: 1rem;
+                        color: #ec4899;
+                    }
+                }
+
+                .petMetric {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    .progressBarContainer {
+                        flex: 1;
+                        height: 16px;
+                        background-color: #e0e0e0;
+                        border-radius: 8px;
+                        overflow: hidden;
+                        margin-bottom: 0;
+
+                        .progressBar {
+                            height: 100%;
+                            transition: width 0.5s ease;
+                        }
+                    }
+
+                    .petNumbers {
+                        font-size: 0.85rem;
+                        color: $clr-color-a50;
+                        min-width: 50px;
+                        text-align: right;
+                        font-weight: 500;
+                    }
+                }
+            }
+
+            .cardFooter {
+                border-top: 1px solid #e0e0e0;
+                padding-top: 12px;
+
+                .contact {
+                    font-size: 0.9rem;
+                    color: $clr-color-a50;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+
+                    svg {
+                        color: $clr-color-a60;
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
     }
 
     @media (max-width: 720px) {
@@ -65,6 +331,33 @@
                 }
             }
         }
+
+        .dashboardSection {
+            padding: 20px;
+            margin-top: 30px;
+
+            h2 {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
+
+            .dashboardGrid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 15px;
+            }
+
+            .abrrigoCard {
+                padding: 15px;
+
+                .cardHeader h3 {
+                    font-size: 1.1rem;
+                }
+
+                .enderecoSmall {
+                    font-size: 0.8rem;
+                }
+            }
+        }
     }
 
     @media (max-width: 640px) {
@@ -85,6 +378,27 @@
 
             p {
                 font-size: 0.9rem;
+            }
+        }
+
+        .dashboardSection {
+            padding: 15px;
+            margin-top: 25px;
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .dashboardGrid {
+                grid-template-columns: 1fr;
+            }
+
+            .abrrigoCard {
+                padding: 12px;
+
+                .cardHeader h3 {
+                    font-size: 1rem;
+                }
             }
         }
     }
@@ -108,6 +422,50 @@
 
             p {
                 font-size: 0.8rem;
+            }
+        }
+
+        .dashboardSection {
+            padding: 10px;
+            margin-top: 20px;
+
+            h2 {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+
+            .loadingText, .emptyText {
+                font-size: 0.95rem;
+            }
+
+            .abrrigoCard {
+                padding: 10px;
+
+                .cardHeader {
+                    margin-bottom: 15px;
+
+                    h3 {
+                        font-size: 0.95rem;
+                    }
+
+                    .enderecoSmall {
+                        font-size: 0.75rem;
+                    }
+                }
+
+                .progressBarContainer {
+                    height: 20px;
+                }
+
+                .occupancyStats {
+                    .percentage {
+                        font-size: 1rem;
+                    }
+
+                    .numbers {
+                        font-size: 0.85rem;
+                    }
+                }
             }
         }
     }

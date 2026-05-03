@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
 
 
 function haversineDistance(lat1, lon1, lat2, lon2) {
@@ -83,7 +85,7 @@ export default function AbrigosMaisProximos() {
       setDesabrigado(response.data.desabrigado)
       setSelectedAbrigo(response.data.abrigo)
       toast.success('Você entrou no abrigo com sucesso!')
-      navigate('/')
+      navigate('/home')
     } catch (err) {
       console.error('Erro ao entrar no abrigo:', err.response ? err.response.data : err.message)
       toast.error('Erro ao entrar no abrigo. Veja o console para detalhes.')
@@ -102,6 +104,7 @@ export default function AbrigosMaisProximos() {
 
   return (
     <>
+    <Header />
     <div className={s.registroContainer}>
       <h1>Abrigos mais próximos</h1>
       <div className={s.content}>
@@ -167,6 +170,8 @@ export default function AbrigosMaisProximos() {
         theme="light"
         transition={Bounce}
       />
+      <Footer />
     </>
+
   )
 }

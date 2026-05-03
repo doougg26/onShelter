@@ -4,6 +4,8 @@ import { AuthContext } from "../../context/AuthContext"
 import api from "../../services/api"
 import s from "./Header.module.scss"
 import imglogo from "../../assets/img/hero.png"
+import { FaBars, FaTimes, FaUser, FaSignOutAlt, FaCog, FaInfoCircle, FaEnvelope } from "react-icons/fa"
+import { MdAdminPanelSettings } from "react-icons/md"
 
 import {jwtDecode} from "jwt-decode"
 
@@ -92,45 +94,43 @@ const handleNavigateHome = (event) => {
       </section>
 
       <button className={s.hamburger} onClick={toggleMenu} aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
+        {isMenuOpen ? <FaTimes /> : <FaBars />}
       </button>
 
       <nav className={`${s.nav} ${isMenuOpen ? s.navOpen : ''}`}>
         {!isLogged && (
           <div className={s.navGroup}>
-            <a href="#" onClick={() => onNavigate('sobre')}>Quem somos</a>
-            <a href="#" onClick={() => onNavigate('contato')}>Contato</a>
-            <a href="#" onClick={handleNavigateLogin}>Entrar</a>
-            <a href="#" onClick={handleNavigateRegister}>Registrar</a>
+            <a href="#" onClick={() => onNavigate('sobre')}><FaInfoCircle /> Quem somos</a>
+            <a href="#" onClick={() => onNavigate('contato')}><FaEnvelope /> Contato</a>
+            <a href="#" onClick={handleNavigateLogin}><FaUser /> Entrar</a>
+            <a href="#" onClick={handleNavigateRegister} className={s.registerBtn}>Registrar</a>
           </div>
         )}
 
         {isLogged && role === "user" && (
           <div className={s.navUser}>
-            <a href="#" onClick={handleNavigateProfile} className={s.nameLink}>Olá, {userName || "Usuário"}</a>
+            <a href="#" onClick={handleNavigateProfile} className={s.nameLink}><FaUser /> Olá, {userName || "Usuário"}</a>
             <div className={s.navLinks}>
-              <a href="#" onClick={() => onNavigate('sobre')}>Quem somos</a>
-              <a href="#" onClick={() => onNavigate('contato')}>Contato</a>
+              <a href="#" onClick={() => onNavigate('sobre')}><FaInfoCircle /> Quem somos</a>
+              <a href="#" onClick={() => onNavigate('contato')}><FaEnvelope /> Contato</a>
             </div>
-            <button onClick={handleLogout}>Sair</button>
+            <button onClick={handleLogout}><FaSignOutAlt /> Sair</button>
           </div>
         )}
 
         {isLogged && role === "manager" && (
           <div className={s.navUser}>
-            <a href="#" onClick={handleNavigateProfile} className={s.nameLink}>Olá, {userName || "Usuário"}</a>
-            <a href="#" onClick={handleNavigateShelter}>Gerenciar abrigo</a>
-            <button onClick={handleLogout}>Sair</button>
+            <a href="#" onClick={handleNavigateProfile} className={s.nameLink}><FaUser /> Olá, {userName || "Usuário"}</a>
+            <a href="#" onClick={handleNavigateShelter}><FaCog /> Gerenciar abrigo</a>
+            <button onClick={handleLogout}><FaSignOutAlt /> Sair</button>
           </div>
         )}
 
         {isLogged && role === "admin" && (
           <div className={s.navUser}>
-            <a href="#" onClick={handleNavigateProfile} className={s.nameLink}>Olá, {userName || "Usuário"}</a>
-            <a href="#" onClick={handleNavigateAdmin}>Painel de administrador</a>
-            <button onClick={handleLogout}>Sair</button>
+            <a href="#" onClick={handleNavigateProfile} className={s.nameLink}><FaUser /> Olá, {userName || "Usuário"}</a>
+            <a href="#" onClick={handleNavigateAdmin}><MdAdminPanelSettings /> Painel de administrador</a>
+            <button onClick={handleLogout}><FaSignOutAlt /> Sair</button>
           </div>
         )}
       </nav>

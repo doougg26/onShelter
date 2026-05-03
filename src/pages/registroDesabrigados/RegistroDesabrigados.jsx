@@ -2,7 +2,7 @@
 
 import s from "./RegistroDesabrigados.module.scss"
 import api from "../../services/api"
-// import { cepApi } from "../../services/api"
+import { cepApi } from "../../services/api"
 import { useState, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext"
@@ -18,7 +18,7 @@ export default function RegistroDesabrigados() {
   const [nome_completo, setNome_completo] = useState("")
   const [tamanho_familia, setTamanho_familia] = useState(1)
   const [contato, setContato] = useState("")
-  const [cep, setCep] = useState("")
+  const [ultima_localizacao, setUltima_localizacao] = useState("")
   const [latitude, setLatitude] = useState("")
   const [longitude, setLongitude] = useState("")
   const [id_abrigo_atual, setId_abrigo_atual] = useState("")
@@ -26,7 +26,7 @@ export default function RegistroDesabrigados() {
   const [detalhes_medicos, setDetalhes_medicos] = useState("")
   const [authUserId, setAuthUserId] = useState(null)
   const [autoFilled, setAutoFilled] = useState({ usuario_id: false, nome_completo: false, contato: false })
-
+  const [CepBusca, setCepBusca] = useState("")
   const navigate = useNavigate()
   const { token } = useContext(AuthContext)
 
@@ -40,15 +40,16 @@ export default function RegistroDesabrigados() {
     setAuthUserId(decoded.id)
   }, [token, navigate])
 
-  // async function buscarEndereco() {
-  //   try {
-  //     const resposta = await cepApi.get(`/${cep}`)
-  //     // cep API não retorna endereço completo; mantemos apenas o CEP no formulário
-  //     alert('CEP encontrado:', resposta.data.location.coordinate[0])
-  //   } catch (error) {
-  //     console.error('Erro ao buscar endereço:', error)
-  //   }
-  // }
+  async function buscarEndereco(cepBusca) {
+    try {
+      const resposta = await cepApi.get(`/${cepBusca}`)
+      // cep API não retorna endereço completo; mantemos apenas o CEP no formulário
+      setUltima_localizacao(resposta.data.street ? `${resposta.data.street}, ${resposta.data.neighborhood}, ${resposta.data.city} - ${resposta.data.state}` : cepBusca)
+      toast.success('CEP encontrado! O campo "Ultima Localização" foi preenchido com o CEP.')
+    } catch (error) {
+      toast.error('Erro ao buscar endereço:', error)
+    }
+  }
 
   const buscarLocalizacao = () => {
     if (!navigator.geolocation) {
@@ -90,7 +91,7 @@ export default function RegistroDesabrigados() {
         nome_completo,
         tamanho_familia: parseInt(tamanho_familia, 10) || 1,
         contato,
-        cep: cep.replace(/\D/g, ''),
+        ultima_localizacao: ultima_localizacao || null,
         latitude: parseFloat(latitude),
         longitude: parseFloat(longitude),
         id_abrigo_atual: id_abrigo_atual ? parseInt(id_abrigo_atual, 10) : null,
@@ -125,9 +126,13 @@ export default function RegistroDesabrigados() {
         <input type="number" required id="tamanho_familia" placeholder="Tamanho da família" value={tamanho_familia} onChange={(e) => setTamanho_familia(e.target.value)} min="1" required />
         <label htmlFor="contato">Contato:</label>
         <input type="text" required id="contato" placeholder="Contato" value={contato} onChange={(e) => setContato(e.target.value)} disabled={autoFilled.contato} required />
-        <label htmlFor="cep">CEP:</label>
-        <input type="text" required id="cep" placeholder="CEP" value={cep} onChange={(e) => setCep(e.target.value)} required />
-        {/* <button type="button" onClick={buscarEndereco}>Buscar CEP</button> */}
+        <label htmlFor="ultima_localizacao">Ultima Localização:</label>
+        <input type="text" required id="ultima_localizacao" placeholder="Ultima Localização" value={ultima_localizacao} onChange={(e) => setUltima_localizacao(e.target.value)} required />
+        <p>Ou</p>
+        <label htmlFor="">Busque pelo cep</label>
+        <input type="text" id="cepBusca" placeholder="Digite o CEP para buscar a localização" value={CepBusca} onChange={(e) => setCepBusca(e.target.value)} />
+        <button type="button" onClick={() => buscarEndereco(CepBusca)}>Buscar CEP</button>       
+
         <button type="button" onClick={buscarLocalizacao}>Buscar posição atual</button>
         <label htmlFor="latitude">Latitude:</label>
         <input type="text" id="latitude" placeholder="Latitude" value={latitude} onChange={(e) => setLatitude(e.target.value)} />
