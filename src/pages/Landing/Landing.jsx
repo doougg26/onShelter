@@ -7,7 +7,8 @@ import s from "./Landing.module.scss"
 import { useRef } from "react"
 import { FcAbout, FcQuestions } from "react-icons/fc";
 import { FaHandsHelping, FaPhone  } from "react-icons/fa";
-import { HiUserGroup } from "react-icons/hi2";
+import { FaPersonShelter } from "react-icons/fa6";
+
 
 
 
@@ -62,7 +63,7 @@ const handleNavigateLogin = () => {
     </div>
     <div className={s.boxMissao} >
       <h2>Nossa Missão</h2>
-      <HiUserGroup size={80} color="skyblue" />
+      <FaPersonShelter size={80} color="skyblue" />
       <p>Facilitar o acesso a abrigos e recursos para pessoas em situação de rua, promovendo dignidade, segurança e oportunidades de recomeço.</p>
     </div>
     <div className={s.boxContato} ref={secaoRef.contato}>
