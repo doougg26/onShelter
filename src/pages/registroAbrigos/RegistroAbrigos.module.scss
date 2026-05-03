@@ -19,6 +19,14 @@
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba($clr-color-a80, 0.1);
 
+    .localizacao {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background-color: $clr-color-a10;
+      border-radius: 3px;
+      padding: 10px;
+    }
     h1 {
       text-align: center;
       color: $clr-color-a60;
