@@ -126,6 +126,16 @@ export default function AbrigosMaisProximos() {
               </button>
             ))
           )}
+          <button
+            type="button"
+            className={s.voltarButton}
+            onClick={() => {
+              navigate('/desabrigados')
+              toast.info('Deabrigado Registrado com sucesso!')
+            }}
+          >
+            Registrar desabrigado
+          </button>
         </div>
 
         <div className={s.details}>

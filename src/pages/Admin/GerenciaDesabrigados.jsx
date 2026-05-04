@@ -57,7 +57,7 @@ export default function GerenciaDesabrigados() {
         nome_completo: formData.nome_completo,
         tamanho_familia: formData.tamanho_familia,
         contato: formData.contato,
-        cep: formData.cep,
+        ultima_localizacao: formData.ultima_localizacao,
         latitude: formData.latitude,
         longitude: formData.longitude,
         id_abrigo_atual: formData.id_abrigo_atual ? parseInt(formData.id_abrigo_atual, 10) : null,
@@ -110,7 +110,7 @@ export default function GerenciaDesabrigados() {
               <th>ID</th>
               <th>Nome</th>
               <th>Contato</th>
-              <th>CEP</th>
+              <th>Última Localização</th>
               <th>Status</th>
               <th>Abrigo Atual</th>
               <th>Ações</th>
@@ -122,7 +122,7 @@ export default function GerenciaDesabrigados() {
                 <td>{desabrigado.id}</td>
                 <td>{editing === desabrigado.id ? <input value={formData.nome_completo || ''} onChange={(e) => handleChange('nome_completo', e.target.value)} /> : desabrigado.nome_completo}</td>
                 <td>{editing === desabrigado.id ? <input value={formData.contato || ''} onChange={(e) => handleChange('contato', e.target.value)} /> : desabrigado.contato}</td>
-                <td>{editing === desabrigado.id ? <input value={formData.cep || ''} onChange={(e) => handleChange('cep', e.target.value)} /> : desabrigado.cep}</td>
+                <td>{editing === desabrigado.id ? <input value={formData.ultima_localizacao || ''} onChange={(e) => handleChange('ultima_localizacao', e.target.value)} /> : desabrigado.ultima_localizacao}</td>
                 <td>{editing === desabrigado.id ? <input value={formData.status || ''} onChange={(e) => handleChange('status', e.target.value)} /> : desabrigado.status}</td>
                 <td>{editing === desabrigado.id ? <input value={formData.id_abrigo_atual || ''} onChange={(e) => handleChange('id_abrigo_atual', e.target.value)} /> : desabrigado.id_abrigo_atual}</td>
                 <td className={s.actionsCell}>

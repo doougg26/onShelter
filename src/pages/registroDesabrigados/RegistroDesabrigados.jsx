@@ -41,29 +41,83 @@ export default function RegistroDesabrigados() {
   }, [token, navigate])
 
   async function buscarEndereco(cepBusca) {
+    if (!cepBusca || cepBusca.trim() === '') {
+      toast.error('Por favor, digite um CEP válido.');
+      return;
+    }
+
     try {
-      const resposta = await cepApi.get(`/${cepBusca}`)
-      // cep API não retorna endereço completo; mantemos apenas o CEP no formulário
-      setUltima_localizacao(resposta.data.street ? `${resposta.data.street}, ${resposta.data.neighborhood}, ${resposta.data.city} - ${resposta.data.state}` : cepBusca)
-      toast.success('CEP encontrado! O campo "Ultima Localização" foi preenchido com o CEP.')
+      console.log('Buscando CEP:', cepBusca);
+      const resposta = await cepApi.get(`/${cepBusca.trim()}`);
+      console.log('Resposta da API:', resposta.data);
+
+      let enderecoFormatado = cepBusca.trim(); // fallback para o CEP digitado
+
+      if (resposta.data && resposta.data.street) {
+        enderecoFormatado = `${resposta.data.street}, ${resposta.data.neighborhood || ''}, ${resposta.data.city} - ${resposta.data.state}`.replace(/, ,/g, ',').replace(/^,|,$/g, '').trim();
+      }
+
+      console.log('Endereço formatado:', enderecoFormatado);
+      setUltima_localizacao(enderecoFormatado);
+      toast.success('CEP encontrado! O campo "Última Localização" foi preenchido.');
     } catch (error) {
-      toast.error('Erro ao buscar endereço:', error)
+      console.error('Erro ao buscar endereço:', error);
+      if (error.response && error.response.status === 404) {
+        toast.error('CEP não encontrado. Verifique se o CEP está correto.');
+      } else {
+        toast.error('Erro ao buscar endereço. Tente novamente.');
+      }
     }
   }
 
   const buscarLocalizacao = () => {
     if (!navigator.geolocation) {
-      toast.message('Geolocalização não é suportada pelo navegador.')
-      return
+      toast.error('Geolocalização não é suportada pelo navegador.');
+      return;
     }
 
-    navigator.geolocation.getCurrentPosition((position) => {
-      setLatitude(position.coords.latitude.toString())
-      setLongitude(position.coords.longitude.toString())
+    toast.info('Obtendo sua localização...');
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const lat = position.coords.latitude.toString();
+      const lng = position.coords.longitude.toString();
+
+      setLatitude(lat);
+      setLongitude(lng);
+
+      // Tentar obter endereço via reverse geocoding
+      try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`);
+        const data = await response.json();
+
+        if (data && data.display_name) {
+          setUltima_localizacao(data.display_name);
+          toast.success('Localização obtida com sucesso! Endereço preenchido automaticamente.');
+        } else {
+          toast.success('Localização obtida! Preencha o campo "Última Localização" manualmente.');
+        }
+      } catch (error) {
+        console.error('Erro ao obter endereço da localização:', error);
+        toast.success('Localização obtida! Preencha o campo "Última Localização" manualmente.');
+      }
     }, (error) => {
-      console.error('Erro ao obter localização:', error)
-      toast.error('Não foi possível obter a localização. Verifique as permissões do navegador.')
-    })
+      console.error('Erro ao obter localização:', error);
+      let errorMessage = 'Erro ao obter localização: ';
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          errorMessage += 'Usuário negou a solicitação de geolocalização.';
+          break;
+        case error.POSITION_UNAVAILABLE:
+          errorMessage += 'Informações de localização indisponíveis.';
+          break;
+        case error.TIMEOUT:
+          errorMessage += 'A solicitação para obter localização expirou.';
+          break;
+        default:
+          errorMessage += 'Erro desconhecido.';
+      }
+      toast.error(errorMessage);
+    });
   }
 
   const preencherComMeusDados = async () => {
@@ -91,13 +145,15 @@ export default function RegistroDesabrigados() {
         nome_completo,
         tamanho_familia: parseInt(tamanho_familia, 10) || 1,
         contato,
-        ultima_localizacao: ultima_localizacao || null,
-        latitude: parseFloat(latitude),
-        longitude: parseFloat(longitude),
+        ultima_localizacao: ultima_localizacao || 'Não informado',
+        latitude: latitude ? parseFloat(latitude) : null,
+        longitude: longitude ? parseFloat(longitude) : null,
         id_abrigo_atual: id_abrigo_atual ? parseInt(id_abrigo_atual, 10) : null,
         status,
         detalhes_medicos: detalhes_medicos || null,
       }
+
+      console.log('Payload sendo enviado:', payload);
 
       const response = await api.post('/desabrigados', payload)
       toast.success('Desabrigado registrado com sucesso!')

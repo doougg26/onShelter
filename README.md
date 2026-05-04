@@ -53,6 +53,16 @@ As rotas são protegidas de acordo com a autenticação:
 
 ---
 
+## ✨ Novidades Importantes
+
+- **Home:** agora conta com um dashboard de ocupação de abrigos, exibindo cards responsivos com porcentagens de vagas e barras de progresso coloridas.
+- **Landing:** utiliza imagem de fundo importada e overlay de gradiente, com navegação suave para seções e ícones React Icons.
+- **Registro de Abrigos:** validação robusta de formulário, busca de endereço por CEP, geolocalização via navegador e validação de role (manager/admin).
+- **Header e Footer:** navegação responsiva com menu hamburguer, links condicionais por role, e footer com ícones de redes sociais.
+- **Consulta de Desabrigados:** filtros avançados de busca por nome, status e espécie; cards para pets, desabrigados e abrigos.
+
+---
+
 ## 🛣️ Rotas Disponíveis
 
 ### **Rotas Públicas**
@@ -60,6 +70,7 @@ As rotas são protegidas de acordo com a autenticação:
 | Rota | Página | Descrição |
 |------|--------|-----------|
 | `/` | Landing | Página inicial com botões de ação |
+| `/landing` | Landing | Alias para a página inicial com imagem de fundo |
 | `/login` | Login | Fazer login na aplicação |
 | `/register` | RegistroLogin | Cadastro de novo usuário |
 
@@ -96,11 +107,21 @@ As rotas são protegidas de acordo com a autenticação:
 
 ### **Landing**
 - **Arquivo:** `src/pages/Landing/Landing.jsx`
-- **Descrição:** Primeira página renderizada da aplicação
+- **Descrição:** Página inicial com imagem de fundo e navegação por seções.
 - **Funcionalidades:**
-  - Introdução da plataforma
-  - Botão de registro só aparece para usuários não logados
-  - Espaçamento de 20px entre boxes
+  - Background com imagem importada e overlay de gradiente
+  - Botões condicionais para login ou registro
+  - Rolagem suave para as seções "Sobre" e "Contato"
+  - Ícones com `react-icons` para reforçar a navegação visual
+
+### **Home**
+- **Arquivo:** `src/pages/home/Home.jsx`
+- **Descrição:** Dashboard do usuário autenticado.
+- **Funcionalidades:**
+  - Cards de ocupação de abrigos com porcentagens e barras de progresso
+  - Cores de status que indicam níveis de ocupação
+  - Acesso rápido para registrar abrigo, desabrigado ou pet
+  - Carregamento com estado de loading e tratamento de erros
 
 ### **Login**
 - **Arquivo:** `src/pages/login/Login.jsx`
@@ -108,6 +129,16 @@ As rotas são protegidas de acordo com a autenticação:
 - **Funcionalidades:**
   - Email e senha
   - Redireciona para `/home` após sucesso
+
+### **Registro de Abrigos**
+- **Arquivo:** `src/pages/registroAbrigos/RegistroAbrigos.jsx`
+- **Descrição:** Formulário para cadastro de abrigos por gerentes ou administradores
+- **Funcionalidades:**
+  - Busca de endereço por CEP usando `cepApi`
+  - Geolocalização via navegador e reverse geocoding
+  - Validações de campos obrigatórios e valores numéricos
+  - Envio de payload sanitizado para API com tipos corretos
+  - Exige role `manager` ou `admin` para acesso
 
 ### **Registro de Desabrigados**
 - **Arquivo:** `src/pages/registroDesabrigados/RegistroDesabrigados.jsx`
@@ -128,12 +159,11 @@ As rotas são protegidas de acordo com a autenticação:
 
 ### **Consulta de Desabrigados, Pets e Abrigos**
 - **Arquivo:** `src/components/Desabrigados/Desabrigados.jsx`
-- **Descrição:** Página de consulta pública
+- **Descrição:** Página de consulta e filtros públicos
 - **Funcionalidades:**
-  - Lista pessoas desabrigadas
-  - Lista pets perdidos/encontrados
-  - Lista abrigos com vagas disponíveis
-  - Acesso a abrigos próximos através de parâmetro `?from=consulta`
+  - Filtros de busca por nome, localização, status e espécie
+  - Listagem de desabrigados, pets e abrigos com vagas disponíveis
+  - Botão para visualizar abrigos próximos de cada desabrigado
 
 ### **Perfil do Usuário**
 - **Arquivo:** `src/pages/Usuario/Usuario.jsx`
@@ -166,9 +196,9 @@ As rotas são protegidas de acordo com a autenticação:
 ### **Footer**
 - **Arquivo:** `src/components/footer/Footer.jsx`
 - **Funcionalidades:**
-  - Informações de contato
-  - Links úteis
-  - Copyright
+  - Informações de contato com email e telefone
+  - Ícones de redes sociais usando `react-icons`
+  - Layout responsivo e mensagem de copyright
 
 ---
 
@@ -269,6 +299,17 @@ function haversineDistance(lat1, lon1, lat2, lon2) {
 
 - **Estilos Globais:** `src/style/globalStyle.scss`
 - **Módulos CSS:** Cada página/componente tem seu próprio `*.module.scss`
+- **Landing:** `src/pages/Landing/Landing.module.scss` usa imagem de fundo, overlay e gradientes.
+- **Home:** `src/pages/home/Home.module.scss` tem dashboard com cards, barras de progresso e animações suaves.
+- **Header/Footer:** `src/components/header/Header.module.scss` e `src/components/footer/Footer.module.scss` garantem navegação responsiva e layout moderno.
+
+### **Uso de Ícones**
+
+A aplicação usa `react-icons` em várias partes da interface para ícones de:
+- navegação
+- status
+- ações de botão
+- seções de conteúdo
 
 ### **Exemplo**
 
